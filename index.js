@@ -20,10 +20,6 @@ app.get('/about', (req, res) => {
     res.send("About Us");
 })
 
-app.post('/submit', (req, res) => {
-    const data = req.body;
-    res.send(`Received: ${JSON.stringify(data)}`);
-})
 
 const items = ['Apple', 'Banana', 'Orange'];
 
@@ -37,6 +33,11 @@ app.post('/items', (req, res) => {
     const newItem = req.body.item;
     items.push(newItem);
     res.json(items);
+})
+
+app.post('/submit', (req, res) => {
+    const data = req.body;
+    res.send(`Received: ${JSON.stringify(data)}`);
 })
 
 app.delete('/items/:index', (req, res) => {
