@@ -47,9 +47,9 @@
             }
         })
 
-        function deleteItem(index){
+        function deleteItem(index, item){
 
-            const confirmation = confirm('Are you sure you want to delete this item?');
+            const confirmation = confirm(`Are you sure you want to delete '${item}' from the list?`);
 
             if(!confirmation) return;
 
@@ -58,10 +58,13 @@
             }).then(() => loadItems());
         }
 
-        function editItem(index){
+        function editItem(index, item){
 
-            const newItem = prompt('Enter new value').trim();
-            if(newItem === ''){
+            const newItem = prompt('Enter new value', item);
+
+            if(newItem == null) return;
+
+            if(newItem.trim() === ''){
                 alert('Item cannot be empty');
                 return;
             }
@@ -71,7 +74,7 @@
                 headers: {
                     'Content-Type' : 'application/json'
                 },
-                body: JSON.stringify({item: prompt('Enter new value').trim()})
+                body: JSON.stringify({item: newItem.trim()})
             }).then(() => loadItems());
         }
 
@@ -82,8 +85,8 @@
                 <li class="flex justify-between items-center border border-gray-300 p-2 rounded-lg hover:bg-gray-100 bg-white">
                     ${item}
                     <span>
-                    <button onclick="deleteItem(${index})" class="bi bi-trash border-2 border-red-500 text-red-500 px-2 py-1 rounded hover:text-white hover:bg-red-500"></button>
-                    <button onclick="editItem(${index})" class="bi bi-pencil border-2 border-blue-500 text-blue-500 px-2 py-1 rounded hover:text-white hover:bg-blue-500"></button>
+                    <button onclick="deleteItem(${index}, '${item}')" class="bi bi-trash border-2 border-red-500 text-red-500 px-2 py-1 rounded hover:text-white hover:bg-red-500"></button>
+                    <button onclick="editItem(${index}, '${item}')" class="bi bi-pencil border-2 border-blue-500 text-blue-500 px-2 py-1 rounded hover:text-white hover:bg-blue-500"></button>
                     </span>
                 </li>`).join('');
         }
