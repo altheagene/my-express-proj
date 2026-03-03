@@ -21,6 +21,18 @@ app.get('/about', (req, res) => {
 
 app.use(express.json()); //Middleware to parse JSON bodies
 
+//Middleware to log incoming requests
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+})
+
+//Middleware to handle errors
+app.use((err,req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+})
+
 app.post('/submit', (req, res) => {
     const data = req.body;
     res.send(`Received: ${JSON.stringify(data)}`);
