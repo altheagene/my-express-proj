@@ -31,13 +31,20 @@
                 });
                 input.value = '';
                 loadItems();
+                input.focus();
             }
         })
+
+        function deleteItem(index){
+            fetch(`/items/${index}`, {
+                method: 'DELETE'
+            }).then(() => loadItems());
+        }
 
         async function loadItems(){
             const response = await fetch('/items');
             const items = await response.json();
-            list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+            list.innerHTML = items.map((item, index) => `<li>${item}<button onclick="deleteItem(${index})">Delete</button></li>`).join('');
         }
 
         loadItems();
