@@ -45,6 +45,12 @@ app.delete('/items/:index', (req, res) => {
     res.json(items);
 })
 
+app.put('/items/:index', (req, res) => {
+    const index = parseInt(req.params.index);
+    const newItem = req.body.item;
+    items[index] = newItem;
+    res.json(items);
+})
 //Middleware to log incoming requests
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
